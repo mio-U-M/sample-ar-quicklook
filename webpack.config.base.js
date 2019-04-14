@@ -102,7 +102,16 @@ module.exports = {
         host: HOST,
         port: PORT,
         contentBase: DEST,
+        disableHostCheck: true,
         openPage: path.relative('/', BASE_DIR),
+        staticOptions: {
+            setHeaders: (res, path, stat) => {
+                if(/.usdz$/.test(path)){
+                    res.setHeader('Content-Type', 'model/vnd.pixar.usd')
+                    res.setHeader('Content-Type', 'model/usd')
+                }
+            }
+        }
     },
     // キャシュ有効化
     cache: true,
